@@ -28,7 +28,7 @@ module DiscourseAi
         end
 
         def max_sequence_length
-          8192
+          1024
         end
 
         def id
