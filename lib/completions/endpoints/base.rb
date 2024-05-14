@@ -70,7 +70,7 @@ module DiscourseAi
         end
 
         def use_ssl?
-          true
+          model_uri.scheme == "https"
         end
 
         def perform_completion!(dialect, user, model_params = {}, feature_name: nil, &blk)
