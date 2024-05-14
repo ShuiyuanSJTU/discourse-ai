@@ -21,6 +21,10 @@ module DiscourseAi
             nil
           end
 
+          def allow_chat
+            false
+          end
+
           def system_personas
             @system_personas ||= {
               Personas::General => -1,
@@ -170,16 +174,21 @@ module DiscourseAi
           prompt
         end
 
-        def find_tools(partial)
+        def find_tools(partial, bot_user:, llm:, context:)
           return [] if !partial.include?("</invoke>")
 
           parsed_function = Nokogiri::HTML5.fragment(partial)
-          parsed_function.css("invoke").map { |fragment| find_tool(fragment) }.compact
+          parsed_function
+            .css("invoke")
+            .map do |fragment|
+              tool_instance(fragment, bot_user: bot_user, llm: llm, context: context)
+            end
+            .compact
         end
 
         protected
 
-        def find_tool(parsed_function)
+        def tool_instance(parsed_function, bot_user:, llm:, context:)
           function_id = parsed_function.at("tool_id")&.text
           function_name = parsed_function.at("tool_name")&.text
           return nil if function_name.nil?
@@ -199,6 +208,15 @@ module DiscourseAi
                 rescue JSON::ParserError
                   [value.to_s]
                 end
+            elsif param[:type] == "string" && value
+              value = strip_quotes(value).to_s
+            elsif param[:type] == "integer" && value
+              value = strip_quotes(value).to_i
+            end
+
+            if param[:enum] && value && !param[:enum].include?(value)
+              # invalid enum value
+              value = nil
             end
 
             arguments[name.to_sym] = value if value
@@ -208,7 +226,24 @@ module DiscourseAi
             arguments,
             tool_call_id: function_id || function_name,
             persona_options: options[tool_klass].to_h,
+            bot_user: bot_user,
+            llm: llm,
+            context: context,
           )
+        end
+
+        def strip_quotes(value)
+          if value.is_a?(String)
+            if value.start_with?('"') && value.end_with?('"')
+              value = value[1..-2]
+            elsif value.start_with?("'") && value.end_with?("'")
+              value = value[1..-2]
+            else
+              value
+            end
+          else
+            value
+          end
         end
 
         def rag_fragments_prompt(conversation_context, llm:, user:)

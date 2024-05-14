@@ -5,8 +5,8 @@ module DiscourseAi
     module Endpoints
       class Fake < Base
         class << self
-          def can_contact?(_endpoint_name, model_name)
-            model_name == "fake"
+          def can_contact?(endpoint_name)
+            endpoint_name == "fake"
           end
 
           def correctly_configured?(_model_name)
@@ -110,7 +110,7 @@ module DiscourseAi
           @last_call = params
         end
 
-        def perform_completion!(dialect, user, model_params = {})
+        def perform_completion!(dialect, user, model_params = {}, feature_name: nil)
           self.class.last_call = { dialect: dialect, user: user, model_params: model_params }
 
           content = self.class.fake_content
