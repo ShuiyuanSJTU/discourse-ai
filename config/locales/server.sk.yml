@@ -10,7 +10,12 @@ sk:
       yaxis: "Dátum"
   discourse_ai:
     ai_bot:
-      command_summary:
+      tool_summary:
         search: "Hľadať"
+        tags: "Zoznam značiek"
         time: "Čas"
         summarize: "Zhrnúť"
+    sentiment:
+      reports:
+        post_emotion:
+          neutral: "Neutrálna"

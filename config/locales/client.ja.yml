@@ -90,7 +90,6 @@ ja:
               description: "トリガーされると、トピックを一般公開しないようにします"
             model:
               label: "モデル"
-              description: "gpt-4 または gpt-3-5-turbo または claude-2 のいずれか"
     discourse_ai:
       title: "AI"
       modals:
@@ -105,17 +104,25 @@ ja:
         save: 保存
         saved: AI ペルソナが保存されました
         enabled: "有効化？"
-        commands: 有効なコマンド
         allowed_groups: 許可されたグループ
         confirm_delete: このペルソナを削除してもよろしいですか？
         title: "AI ペルソナ"
         delete: 削除
         priority: 優先度
         priority_help: 優先ペルソナはペルソナリストの先頭に表示されます。複数のペルソナが優先されている場合は、アルファベット順に並べ替えられます。
-        command_options: "コマンドオプション"
         uploads:
           title: "アップロード"
           uploading: "アップロード中..."
+      llms:
+        save: "保存"
+        edit: "編集"
+        back: "戻る"
+        delete: 削除
+        tests:
+          title: "テストを実行"
+          success: "成功!"
+        providers:
+          google: "Google"
       related_topics:
         title: "関連トピック"
         pill: "関連"
@@ -156,13 +163,14 @@ ja:
           selected: "選択済み"
         image_caption:
           save_caption: "保存"
+          automatic_caption_dialog:
+            confirm: "有効化"
       reviewables:
         model_used: "使用モデル:"
         accuracy: "精度:"
       embeddings:
         semantic_search: "トピック (セマンティック)"
         semantic_search_loading: "AI を使ってさらに多くの結果を検索中"
-        semantic_search_disabled_sort: "この並べ替え順では AI 検索は無効です。有効にするには関連性で並べ替えてください。"
         semantic_search_results:
           toggle: "AI で見つかった %{count} 件の結果を表示中"
           toggle_hidden: "AI で見つかった %{count} 件の結果を非表示"
@@ -176,6 +184,9 @@ ja:
         shortcut_title: "AI ボットと PM を開始する"
         share: "AI の会話を共有"
         conversation_shared: "会話をコピーしました"
+        debug_ai_modal:
+          request: "リクエスト"
+          response: "応答"
         ai_label: "AI"
         ai_title: "AI との会話"
         share_modal:

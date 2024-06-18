@@ -46,6 +46,7 @@ he:
     ai_openai_gpt35_url: "כתובת מותאמת אישית להשלמת שיחות עם GPT 3.5.‏ (לתמיכה ב־Azure)"
     ai_openai_gpt35_16k_url: "כתובת מותאמת אישית להשלמת שיחות עם GPT 3.5 16k.‏ (לתמיכה ב־Azure)"
     ai_openai_gpt4_url: "כתובת מותאמת אישית להשלמת שיחות עם GPT 4.‏ (לתמיכה ב־Azure)"
+    ai_openai_gpt4o_url: "כתובת מותאמת אישית להשלמת שיחות עם GPT 4 Omni.‏ (לתמיכה ב־Azure)"
     ai_openai_gpt4_32k_url: "כתובת מותאמת אישית להשלמת שיחות עם GPT 4 32k.‏ (לתמיכה ב־Azure)"
     ai_openai_gpt4_turbo_url: "כתובת מותאמת אישית להשלמת שיחות עם GPT 4 טורבו.‏ (לתמיכה ב־Azure)"
     ai_openai_dall_e_3_url: "כתובת מותאמת אישית שמשמשת ליצירת תמונות עם DALL-E 3. (לתמיכה ב־Azure)"
@@ -53,6 +54,7 @@ he:
     ai_openai_embeddings_url: "כתובת מותאמת אישית ל־API ההטמעות של OpenAI. (במקרה של Azure זה יכול להיות: https://COMPANY.openai.azure.com/openai/deployments/DEPLOYMENT/embeddings?api-version=2023-05-15)"
     ai_openai_api_key: "מפתח API ל־API של OpenAI"
     ai_anthropic_api_key: "מפתח API ל־API של Anthropic"
+    ai_anthropic_native_tool_call_models: "רשימת דגמים שישתמשו בקריאות כלי טבעיות לעומת כלים מיושנים מבוססי XML."
     ai_cohere_api_key: "מפתח API ל־API של Cohere"
     ai_hugging_face_api_url: "כתובת משלך להסקה על בסיס OpenSource LLM. עם תאימות ל־https://github.com/huggingface/text-generation-inference"
     ai_hugging_face_api_key: מפתח API ל־API של Hugging Face
@@ -76,6 +78,7 @@ he:
     ai_helper_enabled_features: "נא לבחור יכולות להפעלה במסייע הבינה המלאכותית."
     post_ai_helper_allowed_groups: "קבוצות משתמשים שמורשות לגשת ליכולות מסייע בינה מלאכותית בפוסטים"
     ai_helper_image_caption_model: "נא לבחור את הדגם שישמש ליצירת כותרות לתמונות"
+    ai_auto_image_caption_allowed_groups: "משתמשים בקבוצות האלה יכולים להפעיל או לכבות כותרות אוטומטיות לתמונות."
     ai_embeddings_enabled: "הפעלת מודול ההטמעות."
     ai_embeddings_discourse_service_api_endpoint: "הכתובת בה נמצא ה־API הפעיל עבור מודול ההטמעות"
     ai_embeddings_discourse_service_api_key: "מפתח API ל־API של ההטמעות"
@@ -96,7 +99,6 @@ he:
     ai_bot_enable_chat_warning: "הצגת אזהרה עם פתיחת שיח הודעות פרטיות. אפשר לדרוס את זה על ידי עריכת מחרוזת התרגום: discourse_ai.ai_bot.pm_warning"
     ai_bot_allowed_groups: "כאשר לבוט של GPT יש גישה להודעות הפרטיות, הוא יגיב לחברים בקבוצות האלה."
     ai_bot_debugging_allowed_groups: "לאפשר לקבוצות האלו לצפות בכפתור ניפוי שיאות שמציג את בקשת ותגובה הבינה המלאכותית באופן גולמי"
-    ai_bot_public_sharing_allowed_groups: "לאפשר לקבוצות האלה לשתף הודעות בינה מלאכותית פרטיות באופן ציבורי דרך קישור ייחודי שזמין לציבור"
     ai_bot_enabled_chat_bots: "מודלים זמינים שיכהנו כבוט בינה מלאכותית"
     ai_bot_add_to_header: "הצגת כפתור בכותרת כדי לפתוח הודעה פרטית עם בוט בינה מלאכותית"
     ai_bot_github_access_token: "אסימון גישה ל־GitHub לשימוש עם כלי הבינה המלאכותית של GitHub (נחוץ לתמיכה בחיפוש)"
@@ -160,7 +162,6 @@ he:
       personas:
         default_llm_required: "ברירת מחדל של מודל שפה הגדול נחוצה בטרם הפעלת הצ׳אט"
         cannot_delete_system_persona: "אי אפשר למחוק דמויות מערכת, נא להשבית אותן במקום"
-        cannot_edit_system_persona: "לדמויות מערכת אפשר רק לשנות את השם, אסור לערוך פקודות או את בקשת הבסיס של המערכת, במקום יש להשבית ולשבט"
         github_helper:
           name: "מסייע GitHub"
           description: "בוט בינה מלאכותית שמסייע במשימות ובשאלות שקשורות ב־GitHub"
@@ -191,16 +192,20 @@ he:
       topic_not_found: "תקציר לא זמין, לא נמצא נושא!"
       summarizing: "הנושא מסוכם"
       searching: "חיפוש אחר: ‚%{query}’"
-      command_options:
+      tool_options:
         search:
+          search_private:
+            name: "חיפוש פרטי"
+            description: "לכלול את כל הנושאים שלמשתמש יש גישה אליהם בתוצאות החיפוש (כברירת המחדל רק נושאים ציבוריים כלולים)"
           max_results:
             name: "מספר תוצאות מרבי"
             description: "המספר המרבי של תוצאות שיכללו בחיפוש - אם ייעשה שימוש בכללי ברירת מחדל ריקים והספירה תשתנה בהתאם לדגם שבשימוש. הערך הגבוה ביותר הוא 100."
           base_query:
             name: "שאילתת חיפוש בסיסית"
             description: "שאילתת בסיס לשימוש בעת חיפוש. למשל: ‚‎#urgent’ יוסיף את ‚‎#urgent’ לשאילתת החיפוש ויכלול רק נושאים עם הקטגוריה או התגית urgent (דחוף)."
-      command_summary:
+      tool_summary:
         web_browser: "גלישה באינטרנט"
+        github_search_files: "חיפוש קבצים ב־GitHub"
         github_search_code: "חיפוש קוד ב־GitHub"
         github_file_content: "תוכן קובץ ב־GitHub"
         github_pull_request_diff: "הבדל בבקשת דחיפה ב־GitHub"
@@ -218,9 +223,11 @@ he:
         search_settings: "מתבצע חיפוש בהגדרות האתר"
         dall_e: "יצירת תמונה"
         search_meta_discourse: "חיפוש ב־Meta Discrouse"
-      command_help:
+        javascript_evaluator: "שערוך JavaScript"
+      tool_help:
         web_browser: "גלישה באינטרנט באמצעות בוט בינה מלאכותית"
         github_search_code: "חיפוש אחר קוד במאגר GitHub"
+        github_search_files: "חיפוש אחר קבצים במאגר GitHub"
         github_file_content: "משיכת תוכן של קבצים ממאגר ב־GitHub"
         github_pull_request_diff: "משיכת הבדל לבקשת דחיפה ב־GitHub"
         random_picker: "נא לבחור מספר אקראי או רכיב אקראי מרשימה"
@@ -228,7 +235,7 @@ he:
         search: "חיפוש בכל הנושאים הציבוריים בפורום"
         tags: "הצגת כל התגיות בפורום"
         time: "איתור זמן באזורי זמן שונים"
-        summarize: "סיכום נושא"
+        summary: "סיכום נושא"
         image: "יצירת תמונה באמצעות Stable Diffusion"
         google: "חיפוש שאילתה ב־Google"
         read: "הצגת נושא ציבורי בפורום"
@@ -237,8 +244,10 @@ he:
         search_settings: "חיפוש בהגדרות האתר"
         dall_e: "יצירת תמונה באמצעות DALL-E 3"
         search_meta_discourse: "חיפוש ב־Meta Discrouse"
-      command_description:
+        javascript_evaluator: "שערוך JavaScript"
+      tool_description:
         web_browser: "קורא את <a href='%{url}'>%{url}</a>"
+        github_search_files: "בוצע חיפוש אחר ‚%{keywords}’ בתוך %{repo}/%{branch}"
         github_search_code: "בוצע חיפוש אחר ‚%{query}’ בתוך %{repo}"
         github_pull_request_diff: "<a href='%{url}'>%{repo} %{pull_id}</a>"
         github_file_content: "התקבל תוכן של %{file_paths} מתוך %{repo_name}@%{branch}"
@@ -248,38 +257,8 @@ he:
         summarize: "<a href='%{url}'>%{title}</a> סוכם"
         dall_e: "%{prompt}"
         image: "%{prompt}"
-        categories:
-          one: "נמצאה קטגוריה אחת"
-          two: "נמצאו %{count} קטגוריות"
-          many: "נמצאו %{count} קטגוריות"
-          other: "נמצאו %{count} קטגוריות"
-        tags:
-          one: "נמצאה תגית אחת"
-          two: "נמצאו %{count} תגיות"
-          many: "נמצאו %{count} תגיות"
-          other: "נמצאו %{count} תגיות"
-        search:
-          one: "נמצאה <a href='%{url}'>תוצאה</a> אחת לחיפוש אחר ‚%{query}’"
-          two: "נמצאו %{count} <a href='%{url}'>תוצאות</a> לחיפוש אחר ‚%{query}’"
-          many: "נמצאו %{count} <a href='%{url}'>תוצאות</a> לחיפוש אחר ‚%{query}’"
-          other: "נמצאו %{count} <a href='%{url}'>תוצאות</a> לחיפוש אחר ‚%{query}’"
-        search_meta_discourse:
-          one: "נמצאה <a href='%{url}'>תוצאה</a> אחת לחיפוש אחר ‚%{query}’"
-          two: "נמצאו %{count} <a href='%{url}'>תוצאות</a> לחיפוש אחר ‚%{query}’"
-          many: "נמצאו %{count} <a href='%{url}'>תוצאות</a> לחיפוש אחר ‚%{query}’"
-          other: "נמצאו %{count} <a href='%{url}'>תוצאות</a> לחיפוש אחר ‚%{query}’"
-        google:
-          one: "נמצאה <a href='%{url}'>תוצאה</a> אחת לחיפוש אחר ‚%{query}’"
-          two: "נמצאו %{count} <a href='%{url}'>תוצאות</a> לחיפוש אחר ‚%{query}’"
-          many: "נמצאו %{count} <a href='%{url}'>תוצאות</a> לחיפוש אחר ‚%{query}’"
-          other: "נמצאו %{count} <a href='%{url}'>תוצאות</a> לחיפוש אחר ‚%{query}’"
         setting_context: "נקרא הקשר עבור: %{setting_name}"
         schema: "%{tables}"
-        search_settings:
-          one: "נמצאה תוצאה לחיפוש אחר ‚%{query}’"
-          two: "נמצאו %{count} תוצאות לחיפוש אחר ‚%{query}’"
-          many: "נמצאו %{count} תוצאות לחיפוש אחר ‚%{query}’"
-          other: "נמצאו %{count} תוצאות לחיפוש אחר ‚%{query}’"
     summarization:
       configuration_hint:
         one: "יש להגדיר את ההגדרה `%{setting}` תחילה."

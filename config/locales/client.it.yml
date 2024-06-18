@@ -90,7 +90,6 @@ it:
               description: "Rendi l'argomento non visibile al pubblico se attivato"
             model:
               label: "Modello"
-              description: "O gpt-4 o gpt-3-5-turbo o claude-2"
     discourse_ai:
       title: "IA"
       modals:
@@ -105,17 +104,25 @@ it:
         save: Salva
         saved: Personaggio IA salvato
         enabled: "Abilitato?"
-        commands: Comandi abilitati
         allowed_groups: Gruppi ammessi
         confirm_delete: Vuoi davvero eliminare questo personaggio?
         title: "Personaggi IA"
         delete: Elimina
         priority: Priorità
         priority_help: I personaggi prioritari vengono visualizzati agli utenti nella parte superiore dell'elenco dei personaggi. Se più personaggi hanno la priorità, verranno ordinati in ordine alfabetico.
-        command_options: "Opzioni di comando"
         uploads:
           title: "Caricamenti"
           uploading: "Caricamento..."
+      llms:
+        save: "Salva"
+        edit: "Modifica"
+        back: "Indietro"
+        delete: Elimina
+        tests:
+          title: "Esegui test"
+          success: "Riuscito!"
+        providers:
+          google: "Google"
       related_topics:
         title: "Argomenti correlati"
         pill: "Correlato"
@@ -156,13 +163,14 @@ it:
           selected: "Selezionato"
         image_caption:
           save_caption: "Salva"
+          automatic_caption_dialog:
+            confirm: "Abilita"
       reviewables:
         model_used: "Modello utilizzato:"
         accuracy: "Precisione:"
       embeddings:
         semantic_search: "Argomenti (semantici)"
         semantic_search_loading: "Ricerca di altri risultati tramite intelligenza artificiale"
-        semantic_search_disabled_sort: "Ricerca IA disabilitata per questo ordinamento, ordina per Rilevanza per abilitarla."
         semantic_search_results:
           toggle: "Stai vedendo %{count} risultati trovati utilizzando l'IA"
           toggle_hidden: "%{count} risultati trovati utilizzando l'IA sono stati nascosti"
@@ -176,6 +184,9 @@ it:
         shortcut_title: "Avvia un MP con un bot IA"
         share: "Condividi la conversazione con IA"
         conversation_shared: "Conversazione copiata"
+        debug_ai_modal:
+          request: "Richiesta"
+          response: "Risposta"
         ai_label: "IA"
         ai_title: "Conversazione con IA"
         share_modal:

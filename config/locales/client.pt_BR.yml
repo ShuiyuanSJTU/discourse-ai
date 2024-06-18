@@ -91,7 +91,6 @@ pt_BR:
               description: "Ocultar visibilidade do tópico para o público se for ativado"
             model:
               label: "Modelo"
-              description: "Gpt-4, gpt-3-5-turbo ou claude-2"
     discourse_ai:
       title: "IA"
       modals:
@@ -106,17 +105,25 @@ pt_BR:
         save: Salvar
         saved: Persona de IA salva
         enabled: "Ativado(a)?"
-        commands: Comandos ativados
         allowed_groups: Grupos permitidos
         confirm_delete: Você tem certeza de que deseja excluir esta persona?
         title: "Personas de IA"
         delete: Excluir
         priority: Prioridade
         priority_help: Personas de prioridade são exibidas aos(às) usuários(as) no topo da lista de personas. Se várias personas tiverem prioridade, serão escolhidas em ordem alfabética.
-        command_options: "Opções de comando"
         uploads:
           title: "Envios"
           uploading: "Enviando..."
+      llms:
+        save: "Salvar"
+        edit: "Editar"
+        back: "Voltar"
+        delete: Excluir
+        tests:
+          title: "Executar Teste"
+          success: "Sucesso!"
+        providers:
+          google: "Google"
       related_topics:
         title: "Tópicos relacionados"
         pill: "Relacionado(a)"
@@ -157,13 +164,14 @@ pt_BR:
           selected: "Selecionado(a)"
         image_caption:
           save_caption: "Salvar"
+          automatic_caption_dialog:
+            confirm: "Ativar"
       reviewables:
         model_used: "Modelo usado:"
         accuracy: "Precisão:"
       embeddings:
         semantic_search: "Tópicos (semântica)"
         semantic_search_loading: "Pesquisando mais resultados usando IA"
-        semantic_search_disabled_sort: "Pesquisa com IA desativada para esta ordem de classificação, classifique por Relevância para ativar."
         semantic_search_results:
           toggle: "Mostrando %{count} resultados encontrados usando IA"
           toggle_hidden: "Ocultando %{count} resultados encontrados usando IA"
@@ -177,6 +185,9 @@ pt_BR:
         shortcut_title: "Iniciar uma MP com bot de IA"
         share: "Compartilhar conversação com IA"
         conversation_shared: "Conversação copiada"
+        debug_ai_modal:
+          request: "Pedir"
+          response: "Resposta"
         ai_label: "IA"
         ai_title: "Conversação com IA"
         share_modal:

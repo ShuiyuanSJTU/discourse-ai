@@ -90,7 +90,6 @@ nl:
               description: "Maak het topic onzichtbaar voor het publiek als dit wordt geactiveerd"
             model:
               label: "Model"
-              description: "Gpt-4, gpt-3-5-turbo of claude-2"
     discourse_ai:
       title: "AI"
       modals:
@@ -105,17 +104,25 @@ nl:
         save: Opslaan
         saved: AI-persona opgeslagen
         enabled: "Ingeschakeld?"
-        commands: Ingeschakelde opdrachten
         allowed_groups: Toegestane groepen
         confirm_delete: Weet je zeker dat je deze persona wilt verwijderen?
         title: "AI-persona's"
         delete: Verwijderen
         priority: Prioriteit
         priority_help: Prioritaire persona's worden bovenaan de personalijst weergegeven voor gebruikers. Als meerdere persona's prioriteit hebben, worden deze alfabetisch gesorteerd.
-        command_options: "Opdrachtopties"
         uploads:
           title: "Uploads"
           uploading: "Uploaden..."
+      llms:
+        save: "Opslaan"
+        edit: "Bewerken"
+        back: "Vorige"
+        delete: Verwijderen
+        tests:
+          title: "Test uitvoeren"
+          success: "Succes!"
+        providers:
+          google: "Google"
       related_topics:
         title: "Gerelateerde topics"
         pill: "Gerelateerd"
@@ -156,13 +163,14 @@ nl:
           selected: "Geselecteerd"
         image_caption:
           save_caption: "Opslaan"
+          automatic_caption_dialog:
+            confirm: "Inschakelen"
       reviewables:
         model_used: "Gebruikt model:"
         accuracy: "Nauwkeurigheid:"
       embeddings:
         semantic_search: "Topics (semantisch)"
         semantic_search_loading: "Zoeken naar meer resultaten met behulp van AI"
-        semantic_search_disabled_sort: "AI zoeken uitgeschakeld voor deze sorteervolgorde, sorteer op Relevantie om in te schakelen."
         semantic_search_results:
           toggle: "%{count} resultaten gevonden met AI worden weergegeven"
           toggle_hidden: "%{count} resultaten gevonden met AI zijn verborgen"
@@ -176,6 +184,9 @@ nl:
         shortcut_title: "Start een PB met een AI-bot"
         share: "AI-conversatie delen"
         conversation_shared: "Conversatie gekopieerd"
+        debug_ai_modal:
+          request: "Verzoek"
+          response: "Reactie"
         ai_label: "AI"
         ai_title: "Conversatie met AI"
         share_modal:

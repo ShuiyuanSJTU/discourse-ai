@@ -90,7 +90,6 @@ fi:
               description: "Tee ketjusta näkymätön yleisölle, jos tämä laukaistaan"
             model:
               label: "Malli"
-              description: "Joko gpt-4 tai gpt-3-5-turbo tai claude-2"
     discourse_ai:
       title: "Tekoäly"
       modals:
@@ -105,17 +104,25 @@ fi:
         save: Tallenna
         saved: Tekoälypersoona tallennettu
         enabled: "Otettu käyttöön?"
-        commands: Käytössä olevat komennot
         allowed_groups: Sallitut ryhmät
         confirm_delete: Oletko varma, että haluat poistaa tämän persoonan?
         title: "Tekoälypersoonat"
         delete: Poista
         priority: Prioriteetti
         priority_help: Prioriteettipersoonat näytetään käyttäjille ensimmäisinä persoonaluettelossa. Jos useilla persoonilla on prioriteetti, ne järjestetään aakkosjärjestyksessä.
-        command_options: "Komentoasetukset"
         uploads:
           title: "Lataukset"
           uploading: "Ladataan..."
+      llms:
+        save: "Tallenna"
+        edit: "Muokkaa"
+        back: "Takaisin"
+        delete: Poista
+        tests:
+          title: "Suorita testi"
+          success: "Onnistui!"
+        providers:
+          google: "Google"
       related_topics:
         title: "Liittyvät ketjut"
         pill: "Liittyy aiheeseen"
@@ -156,13 +163,14 @@ fi:
           selected: "Valittu"
         image_caption:
           save_caption: "Tallenna"
+          automatic_caption_dialog:
+            confirm: "Ota käyttöön"
       reviewables:
         model_used: "Käytetty malli:"
         accuracy: "Tarkkuus:"
       embeddings:
         semantic_search: "Ketjut (semanttinen)"
         semantic_search_loading: "Haetaan lisää tuloksia tekoälyllä"
-        semantic_search_disabled_sort: "Tekoälyhaku ei ole käytössä tässä lajittelujärjestyksessä, lajittele tulokset olennaisuuden mukaan, jotta voit ottaa sen käyttöön."
         semantic_search_results:
           toggle: "Näytetään %{count} tulosta, jotka löydettiin tekoälyllä"
           toggle_hidden: "Piilotetaan %{count} tulosta, jotka löydettiin tekoälyllä"
@@ -176,6 +184,9 @@ fi:
         shortcut_title: "Aloita yksityiskeskustelu tekoälybotin kanssa"
         share: "Jaa tekoälykeskustelu"
         conversation_shared: "Keskustelu kopioitu"
+        debug_ai_modal:
+          request: "Pyyntö"
+          response: "Vastaus"
         ai_label: "Tekoäly"
         ai_title: "Keskustelu tekoälyn kanssa"
         share_modal:

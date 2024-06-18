@@ -40,6 +40,13 @@ bg:
         delete: Изтрий
         uploads:
           uploading: "Качва се..."
+      llms:
+        save: "Запази "
+        edit: "Редактирай"
+        back: "Назад"
+        delete: Изтрий
+        providers:
+          google: "Google"
       ai_helper:
         context_menu:
           back: "Назад"
@@ -54,6 +61,10 @@ bg:
           cancel: "Прекрати"
         image_caption:
           save_caption: "Запази "
+          automatic_caption_dialog:
+            confirm: "Позволи"
       ai_bot:
+        debug_ai_modal:
+          request: "Заявка"
         share_modal:
           copy: "Копирай"

@@ -41,6 +41,16 @@ gl:
         uploads:
           title: "Cargas"
           uploading: "Cargando..."
+      llms:
+        save: "Gardar"
+        edit: "Editar"
+        back: "Volver"
+        delete: Eliminar
+        tests:
+          title: "Executar proba"
+          success: "Feito!"
+        providers:
+          google: "Google"
       ai_helper:
         context_menu:
           back: "Volver"
@@ -56,6 +66,11 @@ gl:
           cancel: "Cancelar"
         image_caption:
           save_caption: "Gardar"
+          automatic_caption_dialog:
+            confirm: "Activar"
       ai_bot:
+        debug_ai_modal:
+          request: "Petición"
+          response: "Resposta"
         share_modal:
           copy: "Copiar"

@@ -60,9 +60,10 @@ module DiscourseAi
           end
         end
 
-        def initialize(model_name, tokenizer)
+        def initialize(model_name, tokenizer, llm_model: nil)
           @model = model_name
           @tokenizer = tokenizer
+          @llm_model = llm_model
         end
 
         def native_tool_support?
@@ -70,14 +71,34 @@ module DiscourseAi
         end
 
         def use_ssl?
-          model_uri.scheme == "https"
+          if model_uri&.scheme.present?
+            model_uri.scheme == "https"
+          else
+            true
+          end
+        end
+
+        def xml_tags_to_strip(dialect)
+          []
         end
 
         def perform_completion!(dialect, user, model_params = {}, feature_name: nil, &blk)
           allow_tools = dialect.prompt.has_tools?
           model_params = normalize_model_params(model_params)
+          orig_blk = blk
 
           @streaming_mode = block_given?
+          to_strip = xml_tags_to_strip(dialect)
+          @xml_stripper =
+            DiscourseAi::Completions::XmlTagStripper.new(to_strip) if to_strip.present?
+
+          if @streaming_mode && @xml_stripper
+            blk =
+              lambda do |partial, cancel|
+                partial = @xml_stripper << partial
+                orig_blk.call(partial, cancel) if partial
+              end
+          end
 
           prompt = dialect.translate
 
@@ -103,7 +124,7 @@ module DiscourseAi
                 Rails.logger.error(
                   "#{self.class.name}: status: #{response.code.to_i} - body: #{response.body}",
                 )
-                raise CompletionFailed
+                raise CompletionFailed, response.body
               end
 
               log =
@@ -115,6 +136,7 @@ module DiscourseAi
                   topic_id: dialect.prompt.topic_id,
                   post_id: dialect.prompt.post_id,
                   feature_name: feature_name,
+                  language_model: self.class.endpoint_name(@model),
                 )
 
               if !@streaming_mode
@@ -236,12 +258,14 @@ module DiscourseAi
                   else
                     leftover = ""
                   end
+
                   prev_processed_partials = 0 if leftover.blank?
                 end
               rescue IOError, StandardError
                 raise if !cancelled
               end
 
+              has_tool ||= has_tool?(partials_raw)
               # Once we have the full response, try to return the tool as a XML doc.
               if has_tool && native_tool_support?
                 function_buffer = add_to_function_buffer(function_buffer, payload: partials_raw)
@@ -260,6 +284,11 @@ module DiscourseAi
               if !native_tool_support? && function_calls = normalizer.function_calls
                 response_data << function_calls
                 blk.call(function_calls, cancel)
+              end
+
+              if @xml_stripper
+                leftover = @xml_stripper.finish
+                orig_blk.call(leftover, cancel) if leftover.present?
               end
 
               return response_data
@@ -294,7 +323,7 @@ module DiscourseAi
           tokenizer.size(extract_prompt_for_tokenizer(prompt))
         end
 
-        attr_reader :tokenizer, :model
+        attr_reader :tokenizer, :model, :llm_model
 
         protected
 
@@ -339,7 +368,7 @@ module DiscourseAi
           TEXT
         end
 
-        def noop_function_call_text
+        def self.noop_function_call_text
           (<<~TEXT).strip
             <invoke>
             <tool_name></tool_name>
@@ -348,6 +377,10 @@ module DiscourseAi
             <tool_id></tool_id>
             </invoke>
           TEXT
+        end
+
+        def noop_function_call_text
+          self.class.noop_function_call_text
         end
 
         def has_tool?(response)

@@ -204,7 +204,7 @@ RSpec.describe DiscourseAi::AiBot::Playground do
         content = prompt.messages[1][:content]
         # this is fragile by design, mainly so the example can be ultra clear
         expected = (<<~TEXT).strip
-          You are replying inside a Discourse chat. Here is a summary of the conversation so far:
+          You are replying inside a Discourse chat channel. Here is a summary of the conversation so far:
           {{{
           #{user.username}: (a magic thread)
           thread 1 message 1
@@ -265,8 +265,32 @@ RSpec.describe DiscourseAi::AiBot::Playground do
 
       let(:guardian) { Guardian.new(user) }
 
+      it "can supply context" do
+        post = Fabricate(:post, raw: "this is post content")
+
+        prompts = nil
+        message =
+          DiscourseAi::Completions::Llm.with_prepared_responses(["World"]) do |_, _, _prompts|
+            prompts = _prompts
+
+            ::Chat::CreateMessage.call!(
+              chat_channel_id: dm_channel.id,
+              message: "Hello",
+              guardian: guardian,
+              context_post_ids: [post.id],
+            ).message_instance
+          end
+
+        expect(prompts[0].messages[1][:content]).to include("this is post content")
+
+        message.reload
+        reply = ChatSDK::Thread.messages(thread_id: message.thread_id, guardian: guardian).last
+        expect(reply.message).to eq("World")
+        expect(message.thread_id).to be_present
+      end
+
       it "can run tools" do
-        persona.update!(commands: ["TimeCommand"])
+        persona.update!(tools: ["Time"])
 
         responses = [
           "<function_calls><invoke><tool_name>time</tool_name><tool_id>time</tool_id><parameters><timezone>Buenos Aires</timezone></parameters></invoke></function_calls>",
@@ -566,6 +590,34 @@ RSpec.describe DiscourseAi::AiBot::Playground do
       expect(last_post.raw).to include("I found stuff")
     end
 
+    it "supports disabling tool details" do
+      persona = Fabricate(:ai_persona, tool_details: false, tools: ["Search"])
+      bot = DiscourseAi::AiBot::Bot.as(bot_user, persona: persona.class_instance.new)
+      playground = described_class.new(bot)
+
+      response1 = (<<~TXT).strip
+          <function_calls>
+          <invoke>
+          <tool_name>search</tool_name>
+          <tool_id>search</tool_id>
+          <parameters>
+          <search_query>testing various things</search_query>
+          </parameters>
+          </invoke>
+          </function_calls>
+       TXT
+
+      response2 = "I found stuff"
+
+      DiscourseAi::Completions::Llm.with_prepared_responses([response1, response2]) do
+        playground.reply_to(third_post)
+      end
+
+      last_post = third_post.topic.reload.posts.order(:post_number).last
+
+      expect(last_post.raw).to eq("I found stuff")
+    end
+
     it "does not include placeholders in conversation context but includes all completions" do
       response1 = (<<~TXT).strip
           <function_calls>
@@ -595,23 +647,25 @@ RSpec.describe DiscourseAi::AiBot::Playground do
     end
 
     context "with Dall E bot" do
-      let(:bot) do
-        persona =
-          AiPersona
-            .find(
-              DiscourseAi::AiBot::Personas::Persona.system_personas[
-                DiscourseAi::AiBot::Personas::DallE3
-              ],
-            )
-            .class_instance
-            .new
-        DiscourseAi::AiBot::Bot.as(bot_user, persona: persona)
+      before { SiteSetting.ai_openai_api_key = "123" }
+
+      let(:persona) do
+        AiPersona.find(
+          DiscourseAi::AiBot::Personas::Persona.system_personas[
+            DiscourseAi::AiBot::Personas::DallE3
+          ],
+        )
       end
 
-      it "does not include placeholders in conversation context (simulate DALL-E)" do
-        SiteSetting.ai_openai_api_key = "123"
+      let(:bot) { DiscourseAi::AiBot::Bot.as(bot_user, persona: persona.class_instance.new) }
+      let(:data) do
+        image =
+          "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
 
-        response = (<<~TXT).strip
+        [{ b64_json: image, revised_prompt: "a pink cow 1" }]
+      end
+
+      let(:response) { (<<~TXT).strip }
           <function_calls>
           <invoke>
           <tool_name>dall_e</tool_name>
@@ -623,11 +677,24 @@ RSpec.describe DiscourseAi::AiBot::Playground do
           </function_calls>
        TXT
 
-        image =
-          "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+      it "properly returns an image when skipping tool details" do
+        persona.update!(tool_details: false)
 
-        data = [{ b64_json: image, revised_prompt: "a pink cow 1" }]
+        WebMock.stub_request(:post, SiteSetting.ai_openai_dall_e_3_url).to_return(
+          status: 200,
+          body: { data: data }.to_json,
+        )
 
+        DiscourseAi::Completions::Llm.with_prepared_responses([response]) do
+          playground.reply_to(third_post)
+        end
+
+        last_post = third_post.topic.reload.posts.order(:post_number).last
+
+        expect(last_post.raw).to include("a pink cow")
+      end
+
+      it "does not include placeholders in conversation context (simulate DALL-E)" do
         WebMock.stub_request(:post, SiteSetting.ai_openai_dall_e_3_url).to_return(
           status: 200,
           body: { data: data }.to_json,

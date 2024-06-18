@@ -41,6 +41,16 @@ bs_BA:
         uploads:
           title: "Uploads"
           uploading: "Učitavanje..."
+      llms:
+        save: "Save"
+        edit: "Edit"
+        back: "Prethodno"
+        delete: Delete
+        tests:
+          title: "Pokreni test"
+          success: "Uspjeh!"
+        providers:
+          google: "Google"
       ai_helper:
         context_menu:
           back: "Prethodno"
@@ -55,6 +65,11 @@ bs_BA:
           cancel: "Odustani"
         image_caption:
           save_caption: "Save"
+          automatic_caption_dialog:
+            confirm: "Omogući"
       ai_bot:
+        debug_ai_modal:
+          request: "Zatraži"
+          response: "Odgovor"
         share_modal:
           copy: "Copy"

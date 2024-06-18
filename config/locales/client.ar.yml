@@ -90,7 +90,6 @@ ar:
               description: "جعل الموضوع غير مرئي للعامة إذا تم بدؤه"
             model:
               label: "النموذج"
-              description: "إما gpt-4 أو gpt-3-5-turbo أو claude-2"
     discourse_ai:
       title: "الذكاء الاصطناعي"
       modals:
@@ -105,17 +104,25 @@ ar:
         save: حفظ
         saved: تم حفظ شخصية الذكاء الاصطناعي
         enabled: "مفعَّلة؟"
-        commands: الأوامر المفعَّلة
         allowed_groups: المجموعات المسموح بها
         confirm_delete: هل تريد بالتأكيد حذف هذه الشخصية؟
         title: "شخصيات الذكاء الاصطناعي"
         delete: حذف
         priority: الأولوية
         priority_help: يتم عرض الشخصيات ذات الأولوية للمستخدمين في أعلى قائمة الشخصيات. إذا كانت الأولوية لعدة أشخاص، فسيتم فرزهم أبجديًا.
-        command_options: "خيارات الأوامر"
         uploads:
           title: "التحميلات"
           uploading: "جارٍ التحميل..."
+      llms:
+        save: "حفظ"
+        edit: "تعديل"
+        back: "رجوع"
+        delete: حذف
+        tests:
+          title: "تشغيل الاختبار"
+          success: "تم بنجاح!"
+        providers:
+          google: "Google"
       related_topics:
         title: "الموضوعات ذات الصلة"
         pill: "موضوعات ذات صلة"
@@ -156,13 +163,14 @@ ar:
           selected: "محدَّدة"
         image_caption:
           save_caption: "حفظ"
+          automatic_caption_dialog:
+            confirm: "تفعيل"
       reviewables:
         model_used: "النموذج المستخدم:"
         accuracy: "الدقة:"
       embeddings:
         semantic_search: "الموضوعات (دلالية)"
         semantic_search_loading: "جارٍ البحث عن المزيد من النتائج باستخدام الذكاء الاصطناعي"
-        semantic_search_disabled_sort: "تم إيقاف البحث بالذكاء الاصطناعي لترتيب الفرز هذا، قم بالفرز حسب الصلة لتفعيله؟"
         semantic_search_results:
           toggle: "جارٍ عرض %{count} من النتائج التي تم العثور عليها باستخدام الذكاء الاصطناعي"
           toggle_hidden: "جارٍ إخفاء %{count} من النتائج التي تم العثور عليها باستخدام الذكاء الاصطناعي"
@@ -176,6 +184,9 @@ ar:
         shortcut_title: "بدء رسالة خاصة باستخدام روبوت ذكاء اصطناعي"
         share: "مشاركة محادثة الذكاء الاصطناعي"
         conversation_shared: "تم نسخ المحادثة"
+        debug_ai_modal:
+          request: "طلب"
+          response: "الاستجابة"
         ai_label: "الذكاء الاصطناعي"
         ai_title: "المحادثة مع الذكاء الاصطناعي"
         share_modal:

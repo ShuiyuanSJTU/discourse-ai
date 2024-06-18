@@ -63,6 +63,8 @@ module DiscourseAi
         llm_kwargs[:temperature] = persona.temperature if persona.temperature
         llm_kwargs[:top_p] = persona.top_p if persona.top_p
 
+        needs_newlines = false
+
         while total_completions <= MAX_COMPLETIONS && ongoing_chain
           tool_found = false
 
@@ -72,11 +74,18 @@ module DiscourseAi
 
               if (tools.present?)
                 tool_found = true
+                # a bit hacky, but extra newlines do no harm
+                if needs_newlines
+                  update_blk.call("\n\n", cancel, nil)
+                  needs_newlines = false
+                end
+
                 tools[0..MAX_TOOLS].each do |tool|
                   process_tool(tool, raw_context, llm, cancel, update_blk, prompt, context)
                   ongoing_chain &&= tool.chain_next_response?
                 end
               else
+                needs_newlines = true
                 update_blk.call(partial, cancel, nil)
               end
             end
@@ -143,7 +152,12 @@ module DiscourseAi
           end
 
         tool_details = build_placeholder(tool.summary, tool.details, custom_raw: tool.custom_raw)
-        update_blk.call(tool_details, cancel, nil) if !context[:skip_tool_details]
+
+        if context[:skip_tool_details] && tool.custom_raw.present?
+          update_blk.call(tool.custom_raw, cancel, nil)
+        elsif !context[:skip_tool_details]
+          update_blk.call(tool_details, cancel, nil)
+        end
 
         result
       end
@@ -178,7 +192,7 @@ module DiscourseAi
               "ollama:mistral"
             end
           when DiscourseAi::AiBot::EntryPoint::GEMINI_ID
-            "google:gemini-pro"
+            "google:gemini-1.5-pro"
           when DiscourseAi::AiBot::EntryPoint::FAKE_ID
             "fake:fake"
           when DiscourseAi::AiBot::EntryPoint::CLAUDE_3_OPUS_ID

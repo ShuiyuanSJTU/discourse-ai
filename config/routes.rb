@@ -47,8 +47,17 @@ Discourse::Application.routes.draw do
     get "/ai-personas/:id/files/status", to: "discourse_ai/admin/ai_personas#indexing_status_check"
 
     resources :ai_llms,
-              only: %i[index create show update],
+              only: %i[index create show update destroy],
               path: "ai-llms",
-              controller: "discourse_ai/admin/ai_llms"
+              controller: "discourse_ai/admin/ai_llms" do
+      collection { get :test }
+    end
   end
+end
+
+Discourse::Application.routes.append do
+  get "u/:username/preferences/ai" => "users#preferences",
+      :constraints => {
+        username: RouteFormat.username,
+      }
 end

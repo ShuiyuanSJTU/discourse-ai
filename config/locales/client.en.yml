@@ -13,6 +13,7 @@ en:
         claude_2: Claude 2
         gemini_pro: Gemini Pro
         gemini_1_5_pro: Gemini 1.5 Pro
+        gemini_1_5_flash: Gemini 1.5 Flash
         claude_3_opus: Claude 3 Opus
         claude_3_sonnet: Claude 3 Sonnet
         claude_3_haiku: Claude 3 Haiku
@@ -113,10 +114,11 @@ en:
               description: "Puts the post into the review queue if triggered, for moderators to triage"
             model:
               label: "Model"
-              description: "Either gpt-4 or gpt-3-5-turbo or claude-2"
+              description: "Language model used for triage"
 
     discourse_ai:
       title: "AI"
+
       modals:
         select_option: "Select an option..."
 
@@ -129,12 +131,14 @@ en:
         max_context_posts: "Max Context Posts"
         max_context_posts_help: "The maximum number of posts to use as context for the AI when responding to a user. (empty for default)"
         vision_enabled: Vision Enabled
-        vision_enabled_help: If enabled, the AI will attempt to understand images users post in the topic, depends on the model being used supporting vision. Anthropic Claude 3 models support vision.
+        vision_enabled_help: If enabled, the AI will attempt to understand images users post in the topic, depends on the model being used supporting vision. Supported by latest models from Anthropic, Google, and OpenAI.
         vision_max_pixels: Supported image size
         vision_max_pixel_sizes:
           low: Low Quality - cheapest (256x256)
           medium: Medium Quality (512x512)
           high: High Quality - slowest (1024x1024)
+        tool_details: Show Tool Details
+        tool_details_help: Will show end users details on which tools the language model has triggered.
         mentionable: Allow Mentions
         mentionable_help: If enabled, users in allowed groups can mention this user in posts, the AI will respond as this persona.
         user: User
@@ -152,7 +156,7 @@ en:
         save: Save
         saved: AI Persona Saved
         enabled: "Enabled?"
-        commands: Enabled Commands
+        tools: Enabled Tools
         allowed_groups: Allowed Groups
         confirm_delete: Are you sure you want to delete this persona?
         new: "New Persona"
@@ -165,7 +169,7 @@ en:
         top_p_help: Top P to use for the LLM, increase to increase randomness (leave empty to use model default, generally a value from 0.0 to 1.0)
         priority: Priority
         priority_help: Priority personas are displayed to users at the top of the persona list. If multiple personas have priority, they will be sorted alphabetically.
-        command_options: "Command Options"
+        tool_options: "Tool Options"
         rag_chunk_tokens: "Upload Chunk Tokens"
         rag_chunk_tokens_help: "The number of tokens to use for each chunk in the RAG model. Increase to increase the amount of context the AI can use. (changing will re-index all uploads)"
         rag_chunk_overlap_tokens: "Upload Chunk Overlap Tokens"
@@ -199,13 +203,25 @@ en:
         short_title: "LLMs"
         no_llms: "No LLMs yet"
         new: "New Model"
-        display_name: "Name to display:"
-        name: "Model name:"
-        provider: "Service hosting the model:"
-        tokenizer: "Tokenizer:"
-        max_prompt_tokens: "Number of tokens for the prompt:"
+        display_name: "Name to display"
+        name: "Model name"
+        provider: "Service hosting the model"
+        tokenizer: "Tokenizer"
+        max_prompt_tokens: "Number of tokens for the prompt"
+        url: "URL of the service hosting the model"
+        api_key: "API Key of the service hosting the model"
         save: "Save"
+        edit: "Edit"
         saved: "LLM Model Saved"
+        back: "Back"
+        confirm_delete: Are you sure you want to delete this model?
+        delete: Delete
+
+        tests:
+          title: "Run Test"
+          running: "Running test..."
+          success: "Success!"
+          failure: "Trying to contact the model returned this error: %{error}"
 
         hints:
           max_prompt_tokens: "Max numbers of tokens for the prompt. As a rule of thumb, this should be 50% of the model's context window."
@@ -267,6 +283,12 @@ en:
           generating: "Generating caption..."
           credits: "Captioned by AI"
           save_caption: "Save"
+          automatic_caption_setting: "Enable automatic AI image captions"
+          automatic_caption_loading: "Captioning images..."
+          automatic_caption_dialog:
+            prompt: "This post contains non-captioned images. Would you like to enable automatic AI captions on image uploads? (This can be changed in your preferences later)"
+            confirm: "Enable"
+            cancel: "Don't ask again"
 
       reviewables:
         model_used: "Model used:"
@@ -275,7 +297,6 @@ en:
       embeddings:
         semantic_search: "Topics (Semantic)"
         semantic_search_loading: "Searching for more results using AI"
-        semantic_search_disabled_sort: "AI Search disabled for this sort order, sort by Relevance to enable."
         semantic_search_results:
           toggle: "Showing %{count} results found using AI"
           toggle_hidden: "Hiding %{count} results found using AI"

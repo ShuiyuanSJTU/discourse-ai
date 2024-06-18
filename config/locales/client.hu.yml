@@ -41,6 +41,16 @@ hu:
         uploads:
           title: "Feltöltések"
           uploading: "Feltültés..."
+      llms:
+        save: "Mentés"
+        edit: "Szerkesztés"
+        back: "Vissza"
+        delete: Törlés
+        tests:
+          title: "Teszt futtatása"
+          success: "Siker!"
+        providers:
+          google: "Google"
       ai_helper:
         context_menu:
           back: "Vissza"
@@ -54,8 +64,15 @@ hu:
           copy: "Másolás"
           copied: "Másolva!"
           cancel: "Mégse"
+        thumbnail_suggestions:
+          selected: "Kiválasztott"
         image_caption:
           save_caption: "Mentés"
+          automatic_caption_dialog:
+            confirm: "Engedélyez"
       ai_bot:
+        debug_ai_modal:
+          request: "Kérés"
+          response: "Válasz"
         share_modal:
           copy: "Másolás"

@@ -41,6 +41,15 @@ th:
         uploads:
           title: "อัปโหลด"
           uploading: "กำลังอัปโหลด..."
+      llms:
+        save: "บันทึก"
+        edit: "แก้ไข"
+        back: "กลับ"
+        delete: ลบ
+        tests:
+          success: "สำเร็จ!"
+        providers:
+          google: "กูเกิล"
       ai_helper:
         context_menu:
           back: "กลับ"
@@ -55,6 +64,10 @@ th:
           cancel: "ยกเลิก"
         image_caption:
           save_caption: "บันทึก"
+          automatic_caption_dialog:
+            confirm: "เปิดใช้งาน"
       ai_bot:
+        debug_ai_modal:
+          request: "ร้องขอ"
         share_modal:
           copy: "คัดลอก"

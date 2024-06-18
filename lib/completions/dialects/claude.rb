@@ -10,26 +10,36 @@ module DiscourseAi
               model_name,
             )
           end
-
-          def tokenizer
-            DiscourseAi::Tokenizer::AnthropicTokenizer
-          end
         end
 
         class ClaudePrompt
           attr_reader :system_prompt
           attr_reader :messages
+          attr_reader :tools
 
-          def initialize(system_prompt, messages)
+          def initialize(system_prompt, messages, tools)
             @system_prompt = system_prompt
             @messages = messages
+            @tools = tools
           end
+
+          def has_tools?
+            tools.present?
+          end
+        end
+
+        def tokenizer
+          llm_model&.tokenizer_class || DiscourseAi::Tokenizer::AnthropicTokenizer
         end
 
         def translate
           messages = super
 
           system_prompt = messages.shift[:content] if messages.first[:role] == "system"
+
+          if !system_prompt && !native_tool_support?
+            system_prompt = tools_dialect.instructions.presence
+          end
 
           interleving_messages = []
           previous_message = nil
@@ -46,16 +56,42 @@ module DiscourseAi
             previous_message = message
           end
 
-          ClaudePrompt.new(system_prompt.presence, interleving_messages)
+          tools = nil
+          tools = tools_dialect.translated_tools if native_tool_support?
+
+          ClaudePrompt.new(system_prompt.presence, interleving_messages, tools)
         end
 
         def max_prompt_tokens
-          return opts[:max_prompt_tokens] if opts.dig(:max_prompt_tokens).present?
+          return llm_model.max_prompt_tokens if llm_model&.max_prompt_tokens
+
           # Longer term it will have over 1 million
           200_000 # Claude-3 has a 200k context window for now
         end
 
+        def native_tool_support?
+          SiteSetting.ai_anthropic_native_tool_call_models_map.include?(model_name)
+        end
+
         private
+
+        def tools_dialect
+          if native_tool_support?
+            @tools_dialect ||= DiscourseAi::Completions::Dialects::ClaudeTools.new(prompt.tools)
+          else
+            super
+          end
+        end
+
+        def tool_call_msg(msg)
+          translated = tools_dialect.from_raw_tool_call(msg)
+          { role: "assistant", content: translated }
+        end
+
+        def tool_msg(msg)
+          translated = tools_dialect.from_raw_tool(msg)
+          { role: "user", content: translated }
+        end
 
         def model_msg(msg)
           { role: "assistant", content: msg[:content] }

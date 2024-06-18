@@ -41,6 +41,16 @@ sv:
         uploads:
           title: "Uppladdningar"
           uploading: "Laddar upp..."
+      llms:
+        save: "Spara"
+        edit: "Redigera"
+        back: "Tillbaka"
+        delete: Radera
+        tests:
+          title: "Kör test"
+          success: "Lyckades!"
+        providers:
+          google: "Google"
       ai_helper:
         context_menu:
           back: "Tillbaka"
@@ -59,6 +69,11 @@ sv:
           selected: "Markerat"
         image_caption:
           save_caption: "Spara"
+          automatic_caption_dialog:
+            confirm: "Aktivera"
       ai_bot:
+        debug_ai_modal:
+          request: "Förfrågning"
+          response: "Svar"
         share_modal:
           copy: "Kopiera"

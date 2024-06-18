@@ -41,6 +41,16 @@ ca:
         uploads:
           title: "Càrregues"
           uploading: "Carregant..."
+      llms:
+        save: "Desa"
+        edit: "Edita"
+        back: "Enrere"
+        delete: Suprimeix
+        tests:
+          title: "Executa el test"
+          success: "Èxit!"
+        providers:
+          google: "Google"
       ai_helper:
         context_menu:
           back: "Enrere"
@@ -56,6 +66,11 @@ ca:
           cancel: "Cancel·la"
         image_caption:
           save_caption: "Desa"
+          automatic_caption_dialog:
+            confirm: "Activa"
       ai_bot:
+        debug_ai_modal:
+          request: "Sol·licita"
+          response: "Reacció"
         share_modal:
           copy: "Còpia"

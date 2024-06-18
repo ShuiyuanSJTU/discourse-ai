@@ -77,17 +77,17 @@ module DiscourseAi
               Tools::ListCategories,
               Tools::Time,
               Tools::Search,
-              Tools::Summarize,
               Tools::Read,
               Tools::DbSchema,
               Tools::SearchSettings,
-              Tools::Summarize,
               Tools::SettingContext,
               Tools::RandomPicker,
               Tools::DiscourseMetaSearch,
               Tools::GithubFileContent,
               Tools::GithubPullRequestDiff,
+              Tools::GithubSearchFiles,
               Tools::WebBrowser,
+              Tools::JavascriptEvaluator,
             ]
 
             tools << Tools::GithubSearchCode if SiteSetting.ai_bot_github_access_token.present?

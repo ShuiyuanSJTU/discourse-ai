@@ -41,6 +41,15 @@ et:
         uploads:
           title: "Üleslaadimised"
           uploading: "Laen üles..."
+      llms:
+        save: "Salvesta"
+        edit: "Muuda"
+        back: "Tagasi"
+        delete: Kustuta
+        tests:
+          success: "Korras!"
+        providers:
+          google: "Google"
       ai_helper:
         context_menu:
           back: "Tagasi"
@@ -55,6 +64,11 @@ et:
           cancel: "Tühista"
         image_caption:
           save_caption: "Salvesta"
+          automatic_caption_dialog:
+            confirm: "Lülita sisse"
       ai_bot:
+        debug_ai_modal:
+          request: "Päring"
+          response: "Vastus"
         share_modal:
           copy: "Kopeeri"

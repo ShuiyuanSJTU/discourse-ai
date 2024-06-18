@@ -90,7 +90,6 @@ fr:
               description: "Rendez le sujet invisible au public si l'action est déclenchée"
             model:
               label: "Modèle"
-              description: "GPT-4, GPT-3-5-Turbo ou Claude-2"
     discourse_ai:
       title: "IA"
       modals:
@@ -105,17 +104,25 @@ fr:
         save: Enregistrer
         saved: Personnage IA enregistré
         enabled: "Activée ?"
-        commands: Commandes activées
         allowed_groups: Groupes autorisés
         confirm_delete: Voulez-vous vraiment supprimer ce personnage ?
         title: "Personnages IA"
         delete: Supprimer
         priority: Priorité
         priority_help: Les personnages prioritaires sont affichés aux utilisateurs en haut de la liste des personnages. Si plusieurs personnages sont prioritaires, ils seront triés par ordre alphabétique.
-        command_options: "Options de commande"
         uploads:
           title: "Fichiers envoyés"
           uploading: "Envoi en cours…"
+      llms:
+        save: "Enregistrer"
+        edit: "Modifier"
+        back: "Retour"
+        delete: Supprimer
+        tests:
+          title: "Lancer le test"
+          success: "Succès!"
+        providers:
+          google: "Google"
       related_topics:
         title: "Sujets connexes"
         pill: "Lié"
@@ -156,13 +163,14 @@ fr:
           selected: "Sélectionné"
         image_caption:
           save_caption: "Enregistrer"
+          automatic_caption_dialog:
+            confirm: "Activer"
       reviewables:
         model_used: "Modèle utilisé :"
         accuracy: "Précision :"
       embeddings:
         semantic_search: "Sujets (sémantiques)"
         semantic_search_loading: "Rechercher plus de résultats à l'aide de l'IA"
-        semantic_search_disabled_sort: "La recherche IA est désactivée pour cet ordre de tri, triez par pertinence pour l'activer."
         semantic_search_results:
           toggle: "Affichage de %{count} résultats trouvés en utilisant l'IA"
           toggle_hidden: "Masquer %{count} résultats trouvés à l’aide de l'IA"
@@ -176,6 +184,9 @@ fr:
         shortcut_title: "Démarrer une conversation avec un robot IA"
         share: "Partager une conversation IA"
         conversation_shared: "Conversation copiée"
+        debug_ai_modal:
+          request: "Requête"
+          response: "Réponse"
         ai_label: "IA"
         ai_title: "Conversation avec l'IA"
         share_modal:

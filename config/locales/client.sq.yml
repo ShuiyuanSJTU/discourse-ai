@@ -40,6 +40,13 @@ sq:
         delete: Fshij
         uploads:
           uploading: "Duke ngarkuar..."
+      llms:
+        save: "Ruaj"
+        edit: "Redakto"
+        back: "Kthehu mbrapa"
+        delete: Fshij
+        providers:
+          google: "Google"
       ai_helper:
         context_menu:
           back: "Kthehu mbrapa"
@@ -53,6 +60,8 @@ sq:
           cancel: "Anulo"
         image_caption:
           save_caption: "Ruaj"
+          automatic_caption_dialog:
+            confirm: "Aktivizo"
       ai_bot:
         share_modal:
           copy: "Kopjo"

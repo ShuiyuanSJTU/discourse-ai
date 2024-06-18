@@ -41,6 +41,16 @@ hy:
         uploads:
           title: "Վերբեռնումներ"
           uploading: "Վերբեռնում..."
+      llms:
+        save: "Պահպանել"
+        edit: "Խմբագրել"
+        back: "Ետ"
+        delete: Ջնջել
+        tests:
+          title: "Մեկնարկել Փորձարկումը"
+          success: "Հաջողություն!"
+        providers:
+          google: "Google"
       ai_helper:
         context_menu:
           back: "Ետ"
@@ -54,6 +64,11 @@ hy:
           cancel: "Չեղարկել"
         image_caption:
           save_caption: "Պահպանել"
+          automatic_caption_dialog:
+            confirm: "Միացնել"
       ai_bot:
+        debug_ai_modal:
+          request: "Հարցում"
+          response: "Արձագանք"
         share_modal:
           copy: "Կրկնօրինակել"

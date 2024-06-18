@@ -18,24 +18,21 @@ module DiscourseAi
         model_name_without_prov = provider_and_model_name[1..].join
         is_custom_model = provider_name == "custom"
 
-        if is_custom_model
-          llm_model = LlmModel.find(model_name_without_prov)
-          provider_name = llm_model.provider
-          model_name_without_prov = llm_model.name
-        end
+        # Bypass setting validations for custom models. They don't rely on site settings.
+        if !is_custom_model
+          endpoint = DiscourseAi::Completions::Endpoints::Base.endpoint_for(provider_name)
 
-        endpoint = DiscourseAi::Completions::Endpoints::Base.endpoint_for(provider_name)
+          return false if endpoint.nil?
 
-        return false if endpoint.nil?
+          if !endpoint.correctly_configured?(model_name_without_prov)
+            @endpoint = endpoint
+            return false
+          end
 
-        if !endpoint.correctly_configured?(model_name_without_prov)
-          @endpoint = endpoint
-          return false
-        end
-
-        if !can_talk_to_model?(val)
-          @unreachable = true
-          return false
+          if !can_talk_to_model?(val)
+            @unreachable = true
+            return false
+          end
         end
 
         true

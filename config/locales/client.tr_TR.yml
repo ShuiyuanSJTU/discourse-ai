@@ -112,7 +112,6 @@ tr_TR:
               description: "Tetiklenirse, moderatörlerin önceliklendirmesi için gönderiyi inceleme kuyruğuna alır"
             model:
               label: "Model"
-              description: "Ya gpt-4 ya da gpt-3-5-turbo ya da claude-2"
     discourse_ai:
       title: "YZ"
       modals:
@@ -126,7 +125,6 @@ tr_TR:
         max_context_posts: "Maksimum Bağlam Gönderileri"
         max_context_posts_help: "Bir kullanıcıya yanıt verirken yapay zeka için bağlam olarak kullanılacak maksimum gönderi sayısı. (varsayılan için boş)"
         vision_enabled: Vizyon Etkin
-        vision_enabled_help: Etkinleştirilirse, yapay zeka kullanıcıların konuya gönderdiği resimleri anlamaya çalışacaktır, kullanılan modelin görüşü desteklemesine bağlıdır. Anthropic Claude 3 modeli görmeyi destekler.
         vision_max_pixels: Desteklenen görüntü boyutu
         vision_max_pixel_sizes:
           low: Düşük Kalite - en ucuz (256x256)
@@ -141,7 +139,6 @@ tr_TR:
         save: Kaydet
         saved: YZ Kişiliği Kaydedildi
         enabled: "Etkin mi?"
-        commands: Etkin Komutlar
         allowed_groups: İzin Verilen Gruplar
         confirm_delete: Bu kişiliği silmek istediğinizden emin misiniz?
         new: "Yeni Persona"
@@ -154,7 +151,6 @@ tr_TR:
         top_p_help: LLM için kullanılacak en yüksek P, rastgeleliği artırmak için artırın (model varsayılanını kullanmak için boş bırakın, genellikle 0.0 ila 1.0 arasında bir değer)
         priority: Öncelik
         priority_help: Öncelikli kişilikler kullanıcılara kişilik listesinin en üstünde gösterilir. Birden fazla kişiliğin önceliği varsa bunlar alfabetik olarak sıralanır.
-        command_options: "Komut Seçenekleri"
         what_are_personas: "Yapay Zeka Personaları nedir?"
         no_persona_selected: |
           YZ Kişilikleri, Discourse forumunuzda YZ motorunun davranışını özelleştirebilmenizi sağlayan güçlü bir özelliktir. YZ'nin yanıt ve etkileşimlerine rehberlik eden bir "sistem mesajı" görevi görerek daha kişiselleştirilmiş ve etkileşimli bir kullanıcı deneyimi oluşturmaya yardımcı olurlar.
@@ -171,6 +167,16 @@ tr_TR:
           button: "Dosya Ekle"
           filter: "Yüklemeleri filtrele"
           uploading: "Yükleniyor..."
+      llms:
+        save: "Kaydet"
+        edit: "Düzenle"
+        back: "Geri"
+        delete: Sil
+        tests:
+          title: "Testi Çalıştır"
+          success: "Başarılı!"
+        providers:
+          google: "Google"
       related_topics:
         title: "İlgili Konular"
         pill: "İlgili"
@@ -214,13 +220,14 @@ tr_TR:
           generating: "Altyazı oluşturuluyor..."
           credits: "AI tarafından altyazılı"
           save_caption: "Kaydet"
+          automatic_caption_dialog:
+            confirm: "Etkin"
       reviewables:
         model_used: "Kullanılan model:"
         accuracy: "Doğruluk:"
       embeddings:
         semantic_search: "Konular (Semantik)"
         semantic_search_loading: "YZ kullanarak daha fazla sonuç arama"
-        semantic_search_disabled_sort: "YZ Arama bu sıralama düzeni için devre dışı, etkinleştirmek için İlgi seviyesine göre sıralayın."
         semantic_search_results:
           toggle: "YZ kullanılarak bulunan %{count} sonuçları gösteriliyor"
           toggle_hidden: "YZ kullanılarak bulunan %{count} sonuç gizleniyor"
@@ -236,6 +243,9 @@ tr_TR:
         shortcut_title: "YZ botuyla kişisel mesaj başlatın"
         share: "YZ konuşmasını paylaş"
         conversation_shared: "Konuşma kopyalandı"
+        debug_ai_modal:
+          request: "Talep"
+          response: "Karşılık"
         share_full_topic_modal:
           title: "Konuşmayı Herkese Açık Olarak Paylaşın"
           share: "Paylaş ve Bağlantıyı Kopyala"

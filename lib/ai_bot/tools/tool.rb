@@ -22,7 +22,7 @@ module DiscourseAi
           end
 
           def help
-            I18n.t("discourse_ai.ai_bot.command_help.#{signature[:name]}")
+            I18n.t("discourse_ai.ai_bot.tool_help.#{signature[:name]}")
           end
 
           def custom_system_message
@@ -54,15 +54,15 @@ module DiscourseAi
         end
 
         def summary
-          I18n.t("discourse_ai.ai_bot.command_summary.#{name}")
+          I18n.t("discourse_ai.ai_bot.tool_summary.#{name}")
         end
 
         def details
-          I18n.t("discourse_ai.ai_bot.command_description.#{name}", description_args)
+          I18n.t("discourse_ai.ai_bot.tool_description.#{name}", description_args)
         end
 
         def help
-          I18n.t("discourse_ai.ai_bot.command_help.#{name}")
+          I18n.t("discourse_ai.ai_bot.tool_help.#{name}")
         end
 
         def options
@@ -91,6 +91,32 @@ module DiscourseAi
         end
 
         protected
+
+        def fetch_default_branch(repo)
+          api_url = "https://api.github.com/repos/#{repo}"
+
+          response_code = "unknown error"
+          repo_data = nil
+
+          send_http_request(
+            api_url,
+            headers: {
+              "Accept" => "application/vnd.github.v3+json",
+            },
+            authenticate_github: true,
+          ) do |response|
+            response_code = response.code
+            if response_code == "200"
+              begin
+                repo_data = JSON.parse(read_response_body(response))
+              rescue JSON::ParserError
+                response_code = "500 - JSON parse error"
+              end
+            end
+          end
+
+          response_code == "200" ? repo_data["default_branch"] : "main"
+        end
 
         def send_http_request(url, headers: {}, authenticate_github: false, follow_redirects: false)
           raise "Expecting caller to use a block" if !block_given?

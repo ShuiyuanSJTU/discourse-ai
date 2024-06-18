@@ -41,6 +41,13 @@ pt:
         uploads:
           title: "Uploads"
           uploading: "A enviar…"
+      llms:
+        save: "Guardar"
+        edit: "Editar"
+        back: "Retroceder"
+        delete: Eliminar
+        providers:
+          google: "Google"
       ai_helper:
         context_menu:
           back: "Retroceder"
@@ -57,6 +64,11 @@ pt:
           select: "Selecionar"
         image_caption:
           save_caption: "Guardar"
+          automatic_caption_dialog:
+            confirm: "Ativar"
       ai_bot:
+        debug_ai_modal:
+          request: "Pedido"
+          response: "Resposta"
         share_modal:
           copy: "Copiar"

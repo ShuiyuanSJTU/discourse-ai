@@ -51,6 +51,7 @@ en:
     ai_openai_embeddings_url: "Custom URL used for the OpenAI embeddings API. (in the case of Azure it can be: https://COMPANY.openai.azure.com/openai/deployments/DEPLOYMENT/embeddings?api-version=2023-05-15)"
     ai_openai_api_key: "API key for OpenAI API"
     ai_anthropic_api_key: "API key for Anthropic API"
+    ai_anthropic_native_tool_call_models: "List of models that will use native tool calls vs legacy XML based tools."
     ai_cohere_api_key: "API key for Cohere API"
     ai_hugging_face_api_url: "Custom URL used for OpenSource LLM inference. Compatible with https://github.com/huggingface/text-generation-inference"
     ai_hugging_face_api_key: API key for Hugging Face API
@@ -75,6 +76,7 @@ en:
     ai_helper_enabled_features: "Select the features to enable in the AI helper."
     post_ai_helper_allowed_groups: "User groups allowed to access AI Helper features in posts"
     ai_helper_image_caption_model: "Select the model to use for generating image captions"
+    ai_auto_image_caption_allowed_groups: "Users on these groups can toggle automatic image captioning."
 
     ai_embeddings_enabled: "Enable the embeddings module."
     ai_embeddings_discourse_service_api_endpoint: "URL where the API is running for the embeddings module"
@@ -98,7 +100,7 @@ en:
     ai_bot_enable_chat_warning: "Display a warning when PM chat is initiated. Can be overriden by editing the translation string: discourse_ai.ai_bot.pm_warning"
     ai_bot_allowed_groups: "When the GPT Bot has access to the PM, it will reply to members of these groups."
     ai_bot_debugging_allowed_groups: "Allow these groups to see a debug button on posts which displays the raw AI request and response"
-    ai_bot_public_sharing_allowed_groups: "Allow these groups to share AI personal messages with the public via a unique publicly available link"
+    ai_bot_public_sharing_allowed_groups: "Allow these groups to share AI personal messages with the public via a unique publicly available link. Note: if your site requires login, shares will also require login."
     ai_bot_enabled_chat_bots: "Available models to act as an AI Bot"
     ai_bot_add_to_header: "Display a button in the header to start a PM with a AI Bot"
     ai_bot_github_access_token: "GitHub access token for use with GitHub AI tools (required for search support)"
@@ -173,7 +175,7 @@ en:
       personas:
         default_llm_required: "Default LLM model is required prior to enabling Chat"
         cannot_delete_system_persona: "System personas cannot be deleted, please disable it instead"
-        cannot_edit_system_persona: "System personas can only be renamed, you may not edit commands or system prompt, instead disable and make a copy"
+        cannot_edit_system_persona: "System personas can only be renamed, you may not edit tools or system prompt, instead disable and make a copy"
         github_helper:
           name: "GitHub Helper"
           description: "AI Bot specialized in assisting with GitHub-related tasks and questions"
@@ -204,7 +206,7 @@ en:
       topic_not_found: "Summary unavailable, topic not found!"
       summarizing: "Summarizing topic"
       searching: "Searching for: '%{query}'"
-      command_options:
+      tool_options:
         search:
           search_private:
             name: "Search Private"
@@ -215,8 +217,9 @@ en:
           base_query:
             name: "Base Search Query"
             description: "Base query to use when searching. Example: '#urgent' will prepend '#urgent' to the search query and only include topics with the urgent category or tag."
-      command_summary:
+      tool_summary:
         web_browser: "Browse Web"
+        github_search_files: "GitHub search files"
         github_search_code: "GitHub code search"
         github_file_content: "GitHub file content"
         github_pull_request_diff: "GitHub pull request diff"
@@ -234,9 +237,11 @@ en:
         search_settings: "Searching site settings"
         dall_e: "Generate image"
         search_meta_discourse: "Search Meta Discourse"
-      command_help:
+        javascript_evaluator: "Evaluate JavaScript"
+      tool_help:
         web_browser: "Browse web page using the AI Bot"
         github_search_code: "Search for code in a GitHub repository"
+        github_search_files: "Search for files in a GitHub repository"
         github_file_content: "Retrieve content of files from a GitHub repository"
         github_pull_request_diff: "Retrieve a GitHub pull request diff"
         random_picker: "Pick a random number or a random element of a list"
@@ -244,7 +249,7 @@ en:
         search: "Search all public topics on the forum"
         tags: "List all tags on the forum"
         time: "Find time in various time zones"
-        summarize: "Summarize a topic"
+        summary: "Summarize a topic"
         image: "Generate image using Stable Diffusion"
         google: "Search Google for a query"
         read: "Read public topic on the forum"
@@ -253,8 +258,10 @@ en:
         search_settings: "Search site settings"
         dall_e: "Generate image using DALL-E 3"
         search_meta_discourse: "Search Meta Discourse"
-      command_description:
+        javascript_evaluator: "Evaluate JavaScript"
+      tool_description:
         web_browser: "Reading <a href='%{url}'>%{url}</a>"
+        github_search_files: "Searched for '%{keywords}' in %{repo}/%{branch}"
         github_search_code: "Searched for '%{query}' in %{repo}"
         github_pull_request_diff: "<a href='%{url}'>%{repo} %{pull_id}</a>"
         github_file_content: "Retrieved content of %{file_paths} from %{repo_name}@%{branch}"
@@ -316,6 +323,10 @@ en:
         configuration_hint:
           one: "Make sure the `%{settings}` setting was configured."
           other: "Make sure these settings were configured: %{settings}"
+
+      delete_failed:
+        one: "We couldn't delete this model because %{settings} is using it. Update the setting and try again."
+        other: "We couldn't delete this model because %{settings} are using it. Update the settings and try again."
 
     embeddings:
       configuration:
