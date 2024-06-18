@@ -153,19 +153,13 @@ module DiscourseAi
 
       def hypothetical_post_from(search_term)
         prompt = DiscourseAi::Completions::Prompt.new(<<~TEXT.strip)
-          你是一个ai助手，你需要帮助用户从关键词搜索论坛内容。
-          你需要假装自己是一个论坛用户，围绕用户给出的关键词生成一篇帖子，我们会从你生成的内容为用户匹配语义相关的内容。
-          这个论坛描述如下：
-          #{SiteSetting.title}
-          #{SiteSetting.site_description}
-
-          把生成的内容放在 <ai></ai> tags中间。
+          你是一个论坛ai助手，你需要帮助用户从关键词搜索论坛内容。这是一个大学的论坛，主要用户为大学生，讨论内容包括学校生活、课程学习。
         TEXT
 
         prompt.push(type: :user, content: <<~TEXT.strip)
-          使用下面的描述，写一篇简短的帖子，这个帖子应该不超过200字。帖子的主题放在了<input></input> XML tags之间，如下所示：
+          使用下面用户询问的关键词，帮用户写出咨询帖子的标题，帖子的主题如下所示：
 
-          <input>#{search_term}</input>
+          #{search_term.gsub(/(?<=\p{Han})\s+(?=\p{Han})/, '')}
         TEXT
 
         llm_response =
@@ -173,7 +167,7 @@ module DiscourseAi
             SiteSetting.ai_embeddings_semantic_search_hyde_model,
           ).generate(prompt, user: @guardian.user, feature_name: "semantic_search_hyde")
 
-        Nokogiri::HTML5.fragment(llm_response).at("ai")&.text.presence || llm_response
+        llm_response
       end
 
       private
