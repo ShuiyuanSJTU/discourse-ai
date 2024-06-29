@@ -34,7 +34,7 @@ export default class AISuggestionDropdown extends Component {
   }
 
   get showAIButton() {
-    const minCharacterCount = 40;
+    const minCharacterCount = 10;
     const isShowAIButton = this.composer.model.replyLength > minCharacterCount;
     const composerFields = document.querySelector(".composer-fields");
 
