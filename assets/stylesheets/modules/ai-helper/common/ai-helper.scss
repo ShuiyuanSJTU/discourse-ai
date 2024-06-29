@@ -254,10 +254,13 @@
   }
 }
 
+.suggest-titles-button {
+  align-self: baseline;
+}
+
 .suggest-titles-button,
 .suggest-tags-button,
 .suggest-category-button {
-  align-self: baseline;
   border: 1px solid var(--primary-400);
   border-left: none;
   background: none;

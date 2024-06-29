@@ -100,7 +100,7 @@ export default class AISuggestionDropdown extends Component {
 
     if (this.args.mode === this.SUGGESTION_TYPES.category) {
       const selectedCategoryId = this.composer.categories.find(
-        (c) => c.slug === suggestion
+        (c) => c.name === suggestion
       ).id;
       composer.set("categoryId", selectedCategoryId);
       return this.#closeMenu();
