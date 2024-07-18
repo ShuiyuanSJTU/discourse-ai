@@ -184,6 +184,7 @@ en:
           remove: "Remove upload"
 
       tools:
+        back: "Back"
         short_title: "Tools"
         new: "New Tool"
         name: "Name"
@@ -303,6 +304,7 @@ en:
           cancel: "Cancel"
           insert_footnote: "Add footnote"
           footnote_credits: "Explanation by AI"
+          selected_text: "Selected Text"
         fast_edit:
           suggest_button: "Suggest Edit"
         thumbnail_suggestions:
